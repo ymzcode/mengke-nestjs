@@ -20,7 +20,8 @@ import { ArticleModule } from './article/article.module';
       password: '123456',
       database: 'test_db',
       synchronize: true, // 是否将实体同步到数据库
-      autoLoadEntities: true, // 自动加载实体配置，forFeature()注册的每个实体都自己动加载
+      autoLoadEntities: true, // 自动加载实体配置，forFeature()注册的每个实体都自己动加载，
+      timezone: '-08:00',
     }),
   ],
   controllers: [AppController],

@@ -22,8 +22,8 @@ export class ArticleService {
     return article; // 返回新创建的文章实体
   }
 
-  findAll() {
-    return `This action returns all article`;
+  async findAll(): Promise<Article[]> {
+    return await this.articleRepository.find();
   }
 
   findOne(id: number) {

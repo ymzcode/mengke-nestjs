@@ -1,10 +1,13 @@
 import {
+  BeforeInsert,
+  BeforeUpdate,
   Column,
   CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import * as dayjs from 'dayjs';
 
 @Entity()
 export class Article {
@@ -20,9 +23,22 @@ export class Article {
   @Column({ nullable: true })
   author?: string;
 
-  @CreateDateColumn({ type: 'timestamp' })
-  createdAt: Date; // 自动生成的创建时间戳
+  @Column({ type: 'varchar', name: 'created_at' })
+  createdAt: string;
 
-  @UpdateDateColumn({ type: 'timestamp' })
-  updatedAt: Date; // 自动生成的更新时间戳
+  @Column({ type: 'varchar', name: 'updated_at' })
+  updatedAt: string;
+
+  // 在保存到数据库前设置时间
+  @BeforeInsert()
+  setCreatedAt() {
+    const timestamp = dayjs().format('YYYY-MM-DD HH:mm:ss');
+    this.createdAt = timestamp;
+    this.updatedAt = timestamp;
+  }
+
+  @BeforeUpdate()
+  updateDates() {
+    this.updatedAt = dayjs().format('YYYY-MM-DD HH:mm:ss');
+  }
 }
