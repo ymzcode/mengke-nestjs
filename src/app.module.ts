@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { AppController } from './app.controller';
 import { ArticleModule } from './article/article.module';
+import { CategoryModule } from './category/category.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { ArticleModule } from './article/article.module';
       autoLoadEntities: true, // 自动加载实体配置，forFeature()注册的每个实体都自己动加载，
       timezone: '-08:00',
     }),
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [],

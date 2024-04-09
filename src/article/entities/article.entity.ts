@@ -4,10 +4,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import * as dayjs from 'dayjs';
+import { Category } from '../../category/entities/category.entity';
 
 @Entity()
 export class Article {
@@ -31,6 +33,9 @@ export class Article {
 
   @Column({ type: 'varchar', name: 'updated_at' })
   updatedAt: string;
+
+  @ManyToOne(() => Category, (category) => category.articles)
+  category: Category; // 文章与类别的多对一关系
 
   // 在保存到数据库前设置时间
   @BeforeInsert()

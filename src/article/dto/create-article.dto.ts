@@ -1,6 +1,7 @@
 import {
   IsArray,
   IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsString,
   MaxLength,
@@ -22,4 +23,8 @@ export class CreateArticleDto {
   @IsArray({ message: 'Images must be an array of strings' })
   @IsString({ each: true, message: 'Each image must be a string' })
   images?: string[];
+
+  @IsNotEmpty({ message: 'Category must not be empty.' })
+  @IsNumber({}, { message: 'Category must be a valid number.' })
+  categoryId: number; // 使用 categoryId 引用 Category 实体
 }
