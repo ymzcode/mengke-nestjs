@@ -23,6 +23,9 @@ export class Article {
   @Column({ nullable: true })
   author?: string;
 
+  @Column({ type: 'json', nullable: true })
+  images: string[];
+
   @Column({ type: 'varchar', name: 'created_at' })
   createdAt: string;
 

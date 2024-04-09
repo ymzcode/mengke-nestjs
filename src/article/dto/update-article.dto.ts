@@ -1,4 +1,10 @@
-import { IsOptional, IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import {
+  IsOptional,
+  IsNotEmpty,
+  IsString,
+  MaxLength,
+  IsArray,
+} from 'class-validator';
 
 export class UpdateArticleDto {
   @IsOptional()
@@ -16,4 +22,8 @@ export class UpdateArticleDto {
 
   // 这里可以根据需要添加其他字段的验证规则
   // 比如分类、标签等
+  @IsOptional()
+  @IsArray({ message: 'Images must be an array of strings' })
+  @IsString({ each: true, message: 'Each image must be a string' })
+  images?: string[];
 }
