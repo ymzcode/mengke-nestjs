@@ -4,6 +4,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -35,7 +36,12 @@ export class Article {
   updatedAt: string;
 
   @ManyToOne(() => Category, (category) => category.articles)
+  @JoinColumn({ name: 'categoryId' }) // 确保实际的数据库列名是正确的
   category: Category; // 文章与类别的多对一关系
+
+  // 需要有一个categoryId的字段与JoinColumn名字对应，确保可以直接更新
+  @Column()
+  categoryId: number;
 
   // 在保存到数据库前设置时间
   @BeforeInsert()

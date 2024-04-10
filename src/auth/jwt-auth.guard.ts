@@ -1,8 +1,8 @@
 import {
-  ExecutionContext,
+  ExecutionContext, HttpException, HttpStatus,
   Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+  UnauthorizedException
+} from "@nestjs/common";
 import { AuthGuard } from '@nestjs/passport';
 import { Observable } from 'rxjs';
 import { Reflector } from '@nestjs/core';
@@ -29,7 +29,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
 
   handleRequest(err, user, info) {
     if (err || !user) {
-      throw err || new UnauthorizedException(info.message, info.name);
+      throw new HttpException('token过期', HttpStatus.UNAUTHORIZED);
     }
     return user;
   }

@@ -28,6 +28,7 @@ export class ArticleController {
   }
 
   @Get(':id')
+  @Public()
   findOne(@Param('id') id: string) {
     return this.articleService.findOne(+id);
   }

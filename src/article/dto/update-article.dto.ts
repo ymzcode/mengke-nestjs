@@ -4,6 +4,7 @@ import {
   IsString,
   MaxLength,
   IsArray,
+  IsNumber,
 } from 'class-validator';
 
 export class UpdateArticleDto {
@@ -26,4 +27,8 @@ export class UpdateArticleDto {
   @IsArray({ message: 'Images must be an array of strings' })
   @IsString({ each: true, message: 'Each image must be a string' })
   images?: string[];
+
+  @IsOptional()
+  @IsNumber({}, { message: 'Category must be a valid number.' })
+  categoryId?: number; // 使用 categoryId 引用 Category 实体
 }

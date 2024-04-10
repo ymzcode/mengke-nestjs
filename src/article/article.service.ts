@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -26,15 +26,35 @@ export class ArticleService {
     return await this.articleRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} article`;
+  async findOne(id: number): Promise<Article> {
+    const article = await this.articleRepository.findOne({
+      where: { id },
+      relations: ['category'], // 添加这个配置来加载 'category' 关联
+    });
+    if (!article) {
+      throw new NotFoundException(`article with ID "${id}" not found`);
+    }
+    return article;
   }
 
-  update(id: number, updateArticleDto: UpdateArticleDto) {
-    return `This action updates a #${id} article`;
+  async update(
+    id: number,
+    updateArticleDto: UpdateArticleDto,
+  ): Promise<Article> {
+    const article = await this.articleRepository.findOne({
+      where: { id },
+    });
+    const updateArticle = this.articleRepository.merge(
+      article,
+      updateArticleDto,
+    );
+    return this.articleRepository.save(updateArticle);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} article`;
+  async remove(id: number): Promise<void> {
+    const result = await this.articleRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`删除文章错误， id${id}`)
+    }
   }
 }

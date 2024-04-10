@@ -5,7 +5,7 @@ import { AuthGuard } from '@nestjs/passport';
 export class LocalAuthGuard extends AuthGuard('local') {
   handleRequest(err, user, info) {
     if (err || !user) {
-      return new HttpException(
+      throw new HttpException(
         '用户验证失败',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
