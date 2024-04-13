@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { AppController } from './app.controller';
 import { ArticleModule } from './article/article.module';
 import { CategoryModule } from './category/category.module';
+import { AlbumModule } from './album/album.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { CategoryModule } from './category/category.module';
       timezone: '-08:00',
     }),
     CategoryModule,
+    AlbumModule,
   ],
   controllers: [AppController],
   providers: [],
